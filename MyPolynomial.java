@@ -79,4 +79,8 @@ public class MyPolynomial {
 		MyPolynomial x = new MyPolynomial(c);
 		return x;
 	}
+	
+	public MyPolynomial multiple(MyPolynomial a) {
+		return a;
+	}
 }
