@@ -1,4 +1,4 @@
-package oneseven;
+package sevennine;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,20 +10,22 @@ import java.util.Scanner;
 A class called MyPolynomial models polynomials of degree n
 
 The class contains:
-An instance variable named coeffs, which stores the coefficients of the n-degree polynomial in a double array of size n+1, where c0 is kept at index 0.
-A constructor MyPolynomial(coeffs:double...) that takes a variable number of doubles to initialize the coeffs array, where the first argument corresponds to c0.
-The three dots is known as varargs (variable number of arguments), which is a new feature introduced in JDK 1.5. It accepts an array or a sequence of comma-separated arguments.
-The compiler automatically packs the comma-separated arguments in an array. The three dots can only be used for the last argument of the method.
+An instance variable named coeffs, which stores the coefficients of the n-degree polynomial in a double array of size n+1,
+where c0 is kept at index 0.
+A constructor MyPolynomial(coeffs:double...) that takes a variable number of doubles to initialize the coeffs array,
+where the first argument corresponds to c0.
 
 Another constructor that takes coefficients from a file (of the given filename)
 A method getDegree() that returns the degree of this polynomial.
 A method toString() that returns "cnx^n+cn-1x^(n-1)+...+c1x+c0".
 A method evaluate(double x) that evaluate the polynomial for the given x, by substituting the given x into the polynomial expression.
-Methods add() and multiply() that adds and multiplies this polynomial with the given MyPolynomial instance another, and returns a new MyPolynomial instance that contains the result.
+Methods add() and multiply() that adds and multiplies this polynomial with the given MyPolynomial instance another,
+and returns a new MyPolynomial instance that contains the result.
 
-Question: Do you need to keep the degree of the polynomial as an instance variable in the MyPolynomial class in Java? How about C/C++? Why?
-In Java, the degree of the polynomial 
-The degree
+Question: Do you need to keep the degree of the polynomial as an instance variable in the MyPolynomial class in Java?
+How about C/C++? Why?
+In Java, the degree of the polynomial does not need to be kept as an instance variable because you can just call getDegree() whenever
+you need it.
  */
 public class MyPolynomial {
 	private double[] coeffs;
@@ -47,13 +49,40 @@ public class MyPolynomial {
 	}
 	
 	public int getDegree() {
-		return (this.coeffs).length;
+		int endIndex = this.coeffs.length;
+		for(int i = this.coeffs.length - 1;i>0;--i) {
+			if(this.coeffs[i] == 0) {
+				continue;
+			} else {
+				endIndex = i;
+				return endIndex + 1;
+			}
+		}
+		return endIndex;
 	}
 	
 	public String toString() {
 		String ret = "";
-		for(int i = this.getDegree();i >= 0;--i) {
-			ret += (Double.toString(this.coeffs[i]) + "x^" + Integer.toString(i) + " + " );
+		for(int i = this.getDegree() - 1;i >= 0;--i) {
+			if(this.coeffs[i] != 0) {
+				if(this.coeffs[i] == 1) {
+					if(i == 1) {
+						ret += ("x" + " + " );
+					} else if(i == 0) {
+						ret += "1";
+					} else {
+						ret += ("x^" + Integer.toString(i) + " + " );
+					}
+				} else {
+					if(i == 1) {
+						ret += (Double.toString(this.coeffs[i]) + "x" + " + " );
+					} else if(i == 0) {
+						ret += (Double.toString(this.coeffs[i]) + " + " );
+					} else {
+						ret += (Double.toString(this.coeffs[i]) + "x^" + Integer.toString(i) + " + " );
+					}
+				}
+			}
 		}
 		return ret;
 	}
@@ -80,7 +109,14 @@ public class MyPolynomial {
 		return x;
 	}
 	
-	public MyPolynomial multiple(MyPolynomial a) {
-		return a;
+	public MyPolynomial multiply(MyPolynomial a) {
+		double[] xcoeffs = new double[this.getDegree() + a.getDegree()];
+		MyPolynomial x = new MyPolynomial(xcoeffs);
+		for(int i = 0;i<this.getDegree();++i) {
+			for(int j = 0;j<a.getDegree();++j) {
+				x.coeffs[i+j] += this.coeffs[i] + a.coeffs[j];
+			}
+		}
+		return x;
 	}
 }
