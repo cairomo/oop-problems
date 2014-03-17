@@ -1,7 +1,9 @@
-package sevennine;
+package oneseven;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -95,8 +97,30 @@ public class MyPolynomial {
 		return val;
 	}
 	
-	public MyPolynomial add(MyPolynomial a) {
-		double[] c = new double[Math.max((this.coeffs).length, (a.coeffs).length)];
+	public MyPolynomial add(MyPolynomial other) {
+		int retDegree = Math.max(this.getDegree(), other.getDegree());
+		
+		double[] retCoeffArray = new double[retDegree + 1];
+		
+		for(int i = 0;i<Math.min(coeffs.length,  other.coeffs.length); ++i) {
+			retCoeffArray[i] = this.coeffs[i] + other.coeffs[i];
+		}
+		
+		for(int i = Math.min(coeffs.length, other.coeffs.length); i <retDegree + 1;++i) {
+			if(coeffs.length > other.coeffs.length) {
+				retCoeffArray[i] = this.coeffs[i];
+			} else {
+				retCoeffArray[i] = other.coeffs[i];
+			}
+		}
+		MyPolynomial retVal = new MyPolynomial(retCoeffArray);
+		return retVal;
+		
+		
+		/* double[] c = new double[Math.max((this.coeffs).length, (a.coeffs).length)];
+		
+		ArrayList<Double> one = new ArrayList(Arrays.asList(c));
+		
 		for(int i = Math.max((this.coeffs).length, (a.coeffs).length);i >= Math.abs((this.coeffs).length - (a.coeffs).length);++i) {
 			//starts at end of array
 			if((this.coeffs).length >= i && (a.coeffs).length >= i) {
@@ -106,7 +130,7 @@ public class MyPolynomial {
 			} else c[i] = a.coeffs[i];
 		}
 		MyPolynomial x = new MyPolynomial(c);
-		return x;
+		return x; */
 	}
 	
 	public MyPolynomial multiply(MyPolynomial a) {
