@@ -8,10 +8,10 @@ public class TestMyDate {
 	public static void main(String[] args) {
 		MyDate d1 = new MyDate(2012, 2, 28);
 		System.out.println(d1);             // Tuesday 28 Feb 2012
-		System.out.println(d1.nextDay());   // Wednesday 29 Feb 2012
-		System.out.println(d1.nextDay());   // Thursday 1 Mar 2012
-		System.out.println(d1.nextMonth()); // Sunday 1 Apr 2012
-		System.out.println(d1.nextYear());  // Monday 1 Apr 2013
+		System.out.println("next day is " + d1.nextDay());   // Wednesday 29 Feb 2012
+		System.out.println("next day is " + d1.nextDay());   // Thursday 1 Mar 2012
+		System.out.println("next month is " + d1.nextMonth()); // Sunday 1 Apr 2012
+		System.out.println("next year is " + d1.nextYear());  // Monday 1 Apr 2013
 
 		MyDate d2 = new MyDate(2012, 1, 2);
 		System.out.println(d2);                 // Monday 2 Jan 2012
