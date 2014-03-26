@@ -10,7 +10,9 @@ You are required to:
 Write the code for the Book class. You shall re-use the Author class written earlier.
 Write a test program (called TestBook) to test the Book class.
  */
+
 package exercise10;
+import ex1.Author;
 
 public class Book {
 	String name;
@@ -23,7 +25,7 @@ public class Book {
 		this.author = author;
 		this.price = price;
 	}
-	public Book (String name, Author author, double price, int qtyInStock) {
+	public Book (String name, Author[] author, double price, int qtyInStock) {
 		this.name = name;
 		this.author = author;
 		this.price = price;
@@ -34,7 +36,7 @@ public class Book {
 		return this.name;
 	}
 	
-	public Author getAuthor() {
+	public Author[] getAuthors() {
 		return this.author;
 	}
 	
@@ -54,17 +56,7 @@ public class Book {
 	public void setQtyInStock(int qty) {
 		this.qtyInStock = qty;
 	}
-	//problem #2 Introduce new methods called getAuthorName(), getAuthorEmail(), getAuthorGender() in the Book class to return the name, email and gender of the author of the book.
-
-	public String getAuthorName(){
-		return this.author.name;
-	}
-	public String getAuthorEmail(){
-		return this.author.email;
-	}
-	public char getAuthorGender(){
-		return this.author.gender;
-	}
+	
 	
 	public String toString() {
 		String ret = "'" + this.name + "' by " + author.length + " author(s)";
@@ -72,7 +64,10 @@ public class Book {
 	}
 	
 	public void printAuthors() {
-		
+		for(int i = 0;i<this.getAuthors().length - 1;++i) {
+			System.out.print(this.getAuthors()[i] + ", ");
+		}
+		System.out.print(this.getAuthors()[this.getAuthors().length - 1]);
 	}
 	
 }
