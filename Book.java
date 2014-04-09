@@ -92,11 +92,26 @@ public class Book {
 		return ret;
 	}
 	
+	public void comma() {
+		System.out.print(", ");
+	}
+	
 	public void printAuthors() {
 		for(int i = 0;i<this.getAuthors().length - 1;++i) {
-			System.out.print(this.getAuthors()[i] + ", ");
+			if(this.getAuthors()[i] != null) {
+				System.out.print(this.getAuthors()[i]);
+				if(this.getAuthors()[i + 1] != null) {
+					comma();
+				}
+			} else {
+				System.out.print("");
+			}
 		}
-		System.out.print(this.getAuthors()[this.getAuthors().length -1]);
+		if(this.getAuthors()[this.getAuthors().length -1] != null) {
+			System.out.print(this.getAuthors()[this.getAuthors().length -1]);
+		} else {
+			System.out.print("");
+		}
 	}
 	
 }
