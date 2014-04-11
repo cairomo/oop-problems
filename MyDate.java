@@ -1,3 +1,4 @@
+package exercise10;
 /*
  * EXERCISE 10 MyDate class
  * A class called MyDate models a date instance
@@ -262,6 +263,8 @@ public class MyDate {
 			if(this.month == 12) {
 				this.month = 1;
 				++ this.year;
+			} else {
+				++ this.month;
 			}
 		}
 		return this;
