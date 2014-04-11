@@ -181,7 +181,9 @@ public class MyDate {
 	}
 	
 	public String toString() {
-		String pre = "";
+		if(isValidDate(this.getYear(),this.getMonth(),this.getDay())) {
+			String pre = "";
+		
 		switch(getDayOfWeek(this.year,this.month,this.day)) {
 			case 0: pre = "Sun";
 				break;
@@ -226,7 +228,12 @@ public class MyDate {
 				break;
 		}
 		return pre + "day " + this.day + " " + month + " " + this.year;
+	} else {
+		return "Invalid Date!";
 	}
+		
+	} 
+	
 	
 	public MyDate nextDay() {
 		int dayMax = 31;
