@@ -234,8 +234,7 @@ public class MyDate {
 		
 	} 
 	
-	
-	public MyDate nextDay() {
+	public int dayMax() {
 		int dayMax = 31;
 		switch(this.getMonth()) {
 			case 1: dayMax = 31;
@@ -263,7 +262,11 @@ public class MyDate {
 			case 12: dayMax = 31;
 				break;
 		}
-		if(this.getDay() != dayMax) {
+		return dayMax;
+	}
+	
+	public MyDate nextDay() {
+		if(this.getDay() != this.dayMax()) {
 			++ this.day;
 		} else {
 			this.day = 1;
@@ -278,8 +281,16 @@ public class MyDate {
 	}
 	
 	public MyDate nextMonth() {
+		int tempMonth = this.getMonth() + 1;
+		if(this.getMonth() == 12) {
+			tempMonth = 1;
+		}
+		MyDate temp = new MyDate(this.getYear(),tempMonth,1);
+		if(this.dayMax() > temp.dayMax()) {
+			this.setDay(this.dayMax());
+		}
 		if(this.month == 12) {
-			this.month = 1;
+			this.setMonth(1);
 			++ this.year;
 		} else ++ this.month;
 		return this;
@@ -290,6 +301,11 @@ public class MyDate {
 			if(this.year<10000) {
 				++ this.year;
 				return this;
+			}
+			if(isLeapYear(this.getYear())) {
+				if((this.getMonth() == 2) && (this.getDay() == 29)) {
+					this.setDay(28);
+				}
 			}
 		} catch(IllegalStateException e) {
 			System.out.println("Year out of range!");
@@ -302,34 +318,7 @@ public class MyDate {
 			-- this.day;
 		} else {
 			if(this.getMonth() != 1) {
-				int dayMax = 31;
-				switch(this.getMonth() -1) {
-					case 1: dayMax = 31;
-						break;
-					case 2: if(isLeapYear(this.year)) dayMax = 29; else dayMax = 28;
-						break;
-					case 3: dayMax = 31;
-						break;
-					case 4: dayMax = 30;
-						break;
-					case 5: dayMax = 31;
-						break;
-					case 6: dayMax = 30;
-						break;
-					case 7: dayMax = 31;
-						break;
-					case 8: dayMax = 31;
-						break;	
-					case 9: dayMax = 30;
-						break;
-					case 10: dayMax = 31;
-						break;
-					case 11: dayMax = 30;
-						break;
-					case 12: dayMax = 31;
-						break;
-				}
-				this.day = dayMax;
+				this.day = this.dayMax();
 				-- this.month;
 			} else {
 				this.day = 31;
@@ -341,6 +330,14 @@ public class MyDate {
 	}
 	
 	public MyDate previousMonth() {
+		int tempMonth = this.getMonth() - 1;
+		if(this.getMonth() == 1) {
+			tempMonth = 12;
+		}
+		MyDate temp = new MyDate(this.getYear(),tempMonth,1);
+		if(this.dayMax() > temp.dayMax()) {
+			this.setDay(this.dayMax());
+		}
 		if(this.getMonth() != 1) {
 			-- this.month;
 		} else this.month = 12;
@@ -351,6 +348,11 @@ public class MyDate {
 		try {
 			if(this.year > 0) {
 				-- this.year;
+			}
+			if(isLeapYear(this.getYear())) {
+				if((this.getMonth() == 2) && (this.getDay() == 29)) {
+					this.setDay(28);
+				}
 			}
 		} catch(IllegalStateException e) {
 			System.out.println("Year out of range!");
